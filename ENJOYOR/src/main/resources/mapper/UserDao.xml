@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fltjones.dao.UserDao">
+	<!-- 为DAO接口提供sql语句配置 -->
+	
+	<insert id="addUser" parameterType="user">
+		<!-- 主键冲突，报错 --><!-- ignore mySQL可用 insert ignore会忽略数据库已存在的数据，如果重复会跳过此条数据 -->
+		insert ignore into user (UNAME,UPASSWORD)
+		values
+		(#{uname},#{upassword})
+	</insert>
+
+	<!-- 列表查询 -->
+	<select id="queryAll" resultType="User">
+		select USERID,UNAME,UPASSWORD
+		from user
+		order by Userid desc
+		limit #{offset},#{limit}
+	</select>
+
+	<!-- 条件查询 -->
+	<select id="queryById" resultType="User">
+		select USERID,UNAME,UPASSWORD
+		from user
+		where USERID = #{userid}
+	</select>
+
+	<!-- 删除 -->
+	<delete id="deleteUser">
+		delete from user
+		where USERID = #{userid}
+	</delete>
+
+	<!-- 修改 -->
+	<update id="updateUser" parameterType="user">
+		update user
+		set UNAME = #{uname} ,UPASSWORD =
+		#{upassword}
+		where USERID = #{userid}
+	</update>
+
+</mapper>

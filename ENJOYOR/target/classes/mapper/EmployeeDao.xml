@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fltjones.dao.EmployeeDao">
+	<insert id="insertEmployee" parameterType="employee">
+		<!-- 主键冲突，报错 -->
+		insert ignore into employee (ENAME,SEX,EON,PASSWORD,DEID)
+		values
+		(#{ename},#{sex},#{eon},#{password},#{deid})
+	</insert>
+
+	<select id="queryById" resultType="Employee">
+		<!-- 根据id查询Employee并连接部门 -->
+		select EID,ENAME,SEX,EON,PASSWORD,DEID
+		from employee
+		where EID =#{eid}
+	</select>
+
+
+	<select id="queryAll" resultType="Employee">
+		<!-- 全部查询 -->
+		select EID,ENAME,SEX,EON,PASSWORD,DEID
+		from employee
+		order by EID desc
+		limit #{offset},#{limit}
+	</select>
+
+	<!-- 删除 -->
+	<delete id="deleteEmployee">
+		delete from employee
+		where EID = #{eid}
+	</delete>
+
+	<!-- 修改 -->
+	<update id="updateEmployee" parameterType="employee">
+		update employee
+		set
+		ENAME = #{ename},SEX =
+		#{sex},EON =
+		#{eon},PASSWORD = #{password},DEID =
+		#{deid}
+		where
+		EID = #{eid}
+	</update>
+
+</mapper>

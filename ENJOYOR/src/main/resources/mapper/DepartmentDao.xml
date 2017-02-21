@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fltjones.dao.DepartmentDao">
+	<!-- 为DAO接口提供sql语句配置 -->
+
+	<insert id="addDepartment" parameterType="department">
+		<!-- 主键冲突，报错 --><!-- ignore mySQL可用 insert ignore会忽略数据库已存在的数据，如果重复会跳过此条数据 -->
+		insert ignore into department (DENAME,DEMSTATE)
+		values
+		(#{dename},#{demstate})
+	</insert>
+
+	<!-- 列表查询 -->
+	<select id="queryAll" resultType="Department">
+		select DEID,DENAME,DEMSTATE
+		from department
+		order by Deid desc
+		limit #{offset},#{limit}
+	</select>
+
+	<!-- 条件查询 -->
+	<select id="queryById" resultType="Department">
+		select DEID,DENAME,DEMSTATE
+		from department
+		where DEID = #{deid}
+	</select>
+
+	<!-- 删除 -->
+	<delete id="deleteDepartment">
+		delete from department
+		where DEID = #{deid}
+	</delete>
+
+	<!-- 修改 -->
+	<update id="updateDepartment" parameterType="department">
+		update department
+		set DENAME = #{dename} ,DEMSTATE =
+		#{demstate}
+		where DEID = #{deid}
+	</update>
+
+</mapper>
